@@ -17,6 +17,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
             {
                 _pool.Resize(10);
             }
+            SpriteRenderer.enabled = true;
             _pool.Despawn(this);
         }
 

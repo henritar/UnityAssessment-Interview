@@ -35,7 +35,6 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
 
         public void Flip()
         {
-            Debug.Log("Clicked card name: " + _cardView.name);
             _isFlipped = !_isFlipped;
         }
 
@@ -56,7 +55,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
 
         public void MatchCard()
         {
-            
+            _cardView.SpriteRenderer.enabled = false;
         }
 
         private void OnClick(Vector3 clickPosition)
@@ -65,6 +64,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
 
             if (hit.collider != null && hit.collider.gameObject == _cardView.gameObject && !_isFlipped)
             {
+                Debug.Log("Clicked card name: " + _cardView.name);
                 Flip();
                 _signalBus.Fire(new FlipCardSignal() { cardFlipped = this });
             }
