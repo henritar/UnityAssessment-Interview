@@ -10,7 +10,6 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
 
         public void Initialize()
         {
-            throw new System.NotImplementedException();
         }
 
         public void Flip()

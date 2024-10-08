@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 namespace Assets.Scripts.Runtime.CardMatch.Installers
@@ -12,8 +11,11 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
 
         public override void InstallBindings()
         {
-            Container.BindInstance(CardSettings).WithId("cards").IfNotBound();
+            Container.BindInstance(CardSettings.CardPrefab).WithId("cardPrefab").IfNotBound();
+            Container.BindInstance(CardSettings.CardParentName).WithId("cardParentName").IfNotBound();
             Container.BindInstance(CardSettings.CardTypesList).WithId("cardTypes").IfNotBound();
+            Container.BindInstance(CardSettings.RowCount).WithId("rowCount").IfNotBound();
+            Container.BindInstance(CardSettings.ColumnCount).WithId("columnCount").IfNotBound();
         }
     }
 }

@@ -14,8 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardSettings:
     CardPrefab: {fileID: 941369786080420560, guid: 56bd70a97705c6e49b7c5b8a47068eb1, type: 3}
+    CardParentName: CardsGrid
     CardTypesList:
     - CardSprite: {fileID: 0}
       CardId: 0
-    RowCount: 3
+    - CardSprite: {fileID: 0}
+      CardId: 1
+    - CardSprite: {fileID: 0}
+      CardId: 2
+    - CardSprite: {fileID: 0}
+      CardId: 3
+    RowCount: 2
     ColumnCount: 2

@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Runtime.CardMatch.Installers;
-using System;
+﻿using System;
 using UnityEngine;
 using Zenject;
 
