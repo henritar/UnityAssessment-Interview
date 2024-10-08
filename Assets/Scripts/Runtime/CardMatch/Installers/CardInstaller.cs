@@ -6,7 +6,6 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
 {
     public class CardInstaller : Installer<CardInstaller>
     {
-        private static int _cardCount = 0;
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<CardController>().AsSingle();

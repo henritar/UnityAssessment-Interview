@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Runtime.CardMatch.UI
 {
-    public class MainUIView : MonoBehaviour
+    public class ScoreUIView : MonoBehaviour
     {
     }
 }
