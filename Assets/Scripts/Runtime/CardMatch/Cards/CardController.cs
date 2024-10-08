@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.Runtime.CardMatch.Cards
 {
@@ -8,8 +9,15 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
         private readonly CardModel _cardModel;
         private readonly CardView _cardView;
 
+        public CardController(CardModel cardModel, CardView cardView)
+        {
+            _cardModel = cardModel;
+            _cardView = cardView;
+        }
+
         public void Initialize()
         {
+          
         }
 
         public void Flip()
@@ -17,9 +25,9 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
             throw new System.NotImplementedException();
         }
 
-        public bool Compare(int otherCardID)
+        public bool Compare(Sprite otherCardSprite)
         {
-            return otherCardID.Equals(_cardModel.ID);
+            return otherCardSprite.Equals(_cardView.SpriteRenderer.sprite);
         }
 
         public void Animate()

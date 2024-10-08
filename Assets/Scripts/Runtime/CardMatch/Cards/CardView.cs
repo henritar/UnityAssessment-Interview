@@ -6,6 +6,8 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
 {
     public class CardView : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable
     {
+        public SpriteRenderer SpriteRenderer;
+
         IMemoryPool _pool;
 
         public void Dispose()

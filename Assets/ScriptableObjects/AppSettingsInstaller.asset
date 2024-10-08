@@ -16,13 +16,33 @@ MonoBehaviour:
     CardPrefab: {fileID: 941369786080420560, guid: 56bd70a97705c6e49b7c5b8a47068eb1, type: 3}
     CardParentName: CardsGrid
     CardTypesList:
-    - CardSprite: {fileID: 0}
+    - CardSprite: {fileID: 1727942858, guid: e17602873b933304186a7f1a0fd974c8, type: 3}
       CardId: 0
-    - CardSprite: {fileID: 0}
+    - CardSprite: {fileID: -1630490602, guid: e17602873b933304186a7f1a0fd974c8, type: 3}
       CardId: 1
-    - CardSprite: {fileID: 0}
+    - CardSprite: {fileID: -1710000121, guid: e17602873b933304186a7f1a0fd974c8, type: 3}
       CardId: 2
-    - CardSprite: {fileID: 0}
+    - CardSprite: {fileID: -305404411, guid: e17602873b933304186a7f1a0fd974c8, type: 3}
       CardId: 3
-    RowCount: 2
-    ColumnCount: 2
+    - CardSprite: {fileID: 374731242, guid: e17602873b933304186a7f1a0fd974c8, type: 3}
+      CardId: 4
+    - CardSprite: {fileID: -1747031397, guid: e17602873b933304186a7f1a0fd974c8, type: 3}
+      CardId: 5
+    - CardSprite: {fileID: -757957904, guid: 606bb6f838a2af34ba475b4383b1e8db, type: 3}
+      CardId: 6
+    - CardSprite: {fileID: -1845709792, guid: 606bb6f838a2af34ba475b4383b1e8db, type: 3}
+      CardId: 7
+    - CardSprite: {fileID: -1141687197, guid: 606bb6f838a2af34ba475b4383b1e8db, type: 3}
+      CardId: 8
+    - CardSprite: {fileID: -1121358008, guid: 606bb6f838a2af34ba475b4383b1e8db, type: 3}
+      CardId: 9
+    - CardSprite: {fileID: 50489457, guid: 606bb6f838a2af34ba475b4383b1e8db, type: 3}
+      CardId: 10
+    - CardSprite: {fileID: 1272295848, guid: 606bb6f838a2af34ba475b4383b1e8db, type: 3}
+      CardId: 11
+    - CardSprite: {fileID: -247058214, guid: 606bb6f838a2af34ba475b4383b1e8db, type: 3}
+      CardId: 12
+    - CardSprite: {fileID: -1949497895, guid: 606bb6f838a2af34ba475b4383b1e8db, type: 3}
+      CardId: 13
+    RowCount: 5
+    ColumnCount: 5
