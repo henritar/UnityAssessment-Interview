@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c96a93621accc488f8cd1e71064d67, type: 3}
+  m_Name: AppSettingsInstaller
+  m_EditorClassIdentifier: 
+  CardSettings:
+    CardPrefab: {fileID: 941369786080420560, guid: 56bd70a97705c6e49b7c5b8a47068eb1, type: 3}
+    CardTypesList:
+    - CardSprite: {fileID: 0}
+      CardId: 0
+    RowCount: 3
+    ColumnCount: 2

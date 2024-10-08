@@ -6,7 +6,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
     {
         public override void InstallBindings()
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

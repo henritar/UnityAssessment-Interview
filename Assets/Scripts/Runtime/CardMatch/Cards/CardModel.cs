@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Runtime.CardMatch.Installers;
+using UnityEngine;
 
 namespace Assets.Scripts.Runtime.CardMatch.Cards
 {
@@ -7,10 +8,10 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
         public int ID;
         public Sprite Sprite;
 
-        public CardModel(int id, Sprite sprite)
+        public CardModel(MainSceneInstaller.CardType cardType)
         {
-            ID = id;
-            Sprite = sprite;
+            ID = cardType.CardId;
+            Sprite = cardType.CardSprite;
         }
     }
 }
