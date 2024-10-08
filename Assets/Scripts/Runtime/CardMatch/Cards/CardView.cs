@@ -4,6 +4,7 @@ using Zenject;
 
 namespace Assets.Scripts.Runtime.CardMatch.Cards
 {
+    [RequireComponent(typeof(Collider2D))]
     public class CardView : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable
     {
         public SpriteRenderer SpriteRenderer;
