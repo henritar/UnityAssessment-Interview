@@ -51,10 +51,15 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
             }
 
             var newCard = _cardFactory.Create();
-            newCard.SpriteRenderer.sprite = _cardTypes[_cardCount % (_maxCards / 2)].CardSprite;
+
+            MainSceneInstaller.CardType cardType = _cardTypes[_cardCount % (_maxCards / 2)];
+            newCard.gameObject.name = $"card{cardType.CardId}";
+            newCard.SpriteRenderer.sprite = cardType.CardSprite;
             _cardCount++;
+
             var cardRect = newCard.GetComponent<RectTransform>();
             cardRect.sizeDelta = _cellSize;
+
             _cardPool.Add(newCard);
             return newCard;
         }

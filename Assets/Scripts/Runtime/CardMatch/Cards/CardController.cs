@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 using UniRx;
+using Assets.Scripts.Runtime.CardMatch.Misc;
 
 namespace Assets.Scripts.Runtime.CardMatch.Cards
 {
@@ -10,14 +11,17 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
         private readonly CardModel _cardModel;
         private readonly CardView _cardView;
         private readonly Camera _camera;
+        private readonly SignalBus _signalBus;
 
         private bool _isFlipped;
+        public string CardName => _cardView.name;
 
-        public CardController(CardModel cardModel, CardView cardView, Camera camera)
+        public CardController(CardModel cardModel, CardView cardView, Camera camera, SignalBus signalBus)
         {
             _cardModel = cardModel;
             _cardView = cardView;
             _camera = camera;
+            _signalBus = signalBus;
         }
 
         public void Initialize()
@@ -35,23 +39,34 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
             _isFlipped = !_isFlipped;
         }
 
-        public bool Compare(Sprite otherCardSprite)
+        public bool Compare(CardController otherCard)
         {
-            return otherCardSprite.Equals(_cardView.SpriteRenderer.sprite);
+            if (otherCard == null)
+            {
+                return false;
+            }
+
+            return otherCard.CardName.Equals(CardName);
         }
 
-        public void Animate()
+        public bool Compare(Sprite otherCardSprite)
         {
-            throw new System.NotImplementedException();
+            return otherCardSprite.name.Equals(_cardView.SpriteRenderer.sprite.name);
+        }
+
+        public void MatchCard()
+        {
+            
         }
 
         private void OnClick(Vector3 clickPosition)
         {
             RaycastHit2D hit = Physics2D.Raycast(clickPosition, Vector2.zero);
 
-            if (hit.collider != null && hit.collider.gameObject == _cardView.gameObject)
+            if (hit.collider != null && hit.collider.gameObject == _cardView.gameObject && !_isFlipped)
             {
                 Flip();
+                _signalBus.Fire(new FlipCardSignal() { cardFlipped = this });
             }
         }
     }

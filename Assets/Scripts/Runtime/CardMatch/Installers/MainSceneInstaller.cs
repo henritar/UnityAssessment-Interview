@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Runtime.CardMatch.Cards;
+using Assets.Scripts.Runtime.CardMatch.Handler;
 using Assets.Scripts.Runtime.CardMatch.Misc;
 using Assets.Scripts.Runtime.CardMatch.Spawner;
 using System;
@@ -21,6 +22,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
             Container.Bind<Camera>().FromComponentInHierarchy().AsSingle();
 
             Container.BindInterfacesAndSelfTo<CardSpawner>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CardComparerHandler>().AsSingle();
 
             var cardParent = GameObject.Find(_cardParentName).GetComponent<GridLayoutGroup>();
 

@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Runtime.CardMatch.Misc
+﻿using Assets.Scripts.Runtime.CardMatch.Cards;
+
+namespace Assets.Scripts.Runtime.CardMatch.Misc
 {
     public struct ReturnToMainUISignal
     {
@@ -25,5 +27,9 @@
     public struct UpdateComboValueSignal
     {
         public int newValue;
+    }
+    public struct FlipCardSignal
+    {
+        public CardController cardFlipped;
     }
 }
