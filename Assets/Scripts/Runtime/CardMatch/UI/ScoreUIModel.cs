@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using TMPro;
-using UnityEngine;
+﻿using TMPro;
 using Zenject;
 
 namespace Assets.Scripts.Runtime.CardMatch.UI
@@ -8,8 +6,10 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
     public class ScoreUIModel
     {
         [Inject(Id = "scoreValueText")]
-        public TextMeshProUGUI ScoreValue;
+        public TextMeshProUGUI ScoreTextValue;
         [Inject(Id = "comboValueText")]
-        public TextMeshProUGUI ComboValue;
+        public TextMeshProUGUI ComboTextValue;
+        public int ScoreValue;
+        public int ComboValue;
     }
 }

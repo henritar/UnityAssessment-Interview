@@ -15,6 +15,9 @@
     public struct QuitGameSignal
     {
     }
+    public struct ResetScoreUISignal
+    {
+    }
     public struct UpdateScoreValueSignal
     {
         public int newValue;
