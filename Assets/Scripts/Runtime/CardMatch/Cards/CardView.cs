@@ -26,5 +26,13 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
         {
             _pool = pool;
         }
+
+        public class Factory : PlaceholderFactory<CardView>
+        {
+        }
+
+        public class CardViewPool : MonoPoolableMemoryPool<IMemoryPool, CardView>
+        {
+        }
     }
 }
