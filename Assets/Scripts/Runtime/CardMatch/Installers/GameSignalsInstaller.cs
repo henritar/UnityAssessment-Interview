@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using Assets.Scripts.Runtime.CardMatch.Misc;
+using Zenject;
 
 namespace Assets.Scripts.Runtime.CardMatch.Installers
 {
@@ -6,7 +7,11 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
     {
         public override void InstallBindings()
         {
-            
+            Container.DeclareSignalWithInterfaces<ReturnToMainUISignal>().OptionalSubscriber();
+            Container.DeclareSignalWithInterfaces<StartGameSignal>().OptionalSubscriber();
+            Container.DeclareSignalWithInterfaces<LoadGameSignal>().OptionalSubscriber();
+            Container.DeclareSignalWithInterfaces<SettingsSignal>().OptionalSubscriber();
+            Container.DeclareSignalWithInterfaces<QuitGameSignal>().OptionalSubscriber();
         }
     }
 }

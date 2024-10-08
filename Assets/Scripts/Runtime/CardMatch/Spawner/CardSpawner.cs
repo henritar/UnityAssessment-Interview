@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Runtime.CardMatch.Cards;
+using Assets.Scripts.Runtime.CardMatch.Misc;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
@@ -14,23 +15,20 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
         private readonly int _columnCount;
         private readonly IFactory<CardView> _cardFactory;
         private readonly GridLayoutGroup _gridLayout;
+        private readonly SignalBus _signalBus;
 
         private List<CardView> _cardPool = new List<CardView>();
 
-        public CardSpawner(CardView.Factory factory, GridLayoutGroup gridLayout)
+        public CardSpawner(CardView.Factory factory, GridLayoutGroup gridLayout, SignalBus signalBus)
         {
             _cardFactory = factory;
             _gridLayout = gridLayout;
+            _signalBus = signalBus;
         }
 
         public void Initialize()
         {
-            CardView spawnedCard;
-
-            do
-            {
-                spawnedCard = SpawnCard();
-            } while (spawnedCard != null);
+            _signalBus.Subscribe<StartGameSignal>(StartGame);
         }
 
         public CardView SpawnCard()
@@ -53,6 +51,16 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
                 _cardPool.Remove(card);
                 card.Dispose();
             }
+        }
+
+        private void StartGame(StartGameSignal signal)
+        {
+            CardView spawnedCard;
+
+            do
+            {
+                spawnedCard = SpawnCard();
+            } while (spawnedCard != null);
         }
     }
 }
