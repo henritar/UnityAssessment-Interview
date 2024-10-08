@@ -15,4 +15,12 @@
     public struct QuitGameSignal
     {
     }
+    public struct UpdateScoreValueSignal
+    {
+        public int newValue;
+    }
+    public struct UpdateComboValueSignal
+    {
+        public int newValue;
+    }
 }
