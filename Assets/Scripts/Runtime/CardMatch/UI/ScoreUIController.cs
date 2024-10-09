@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Runtime.CardMatch.Misc;
+﻿using Assets.Scripts.Runtime.CardMatch.Handler;
+using Assets.Scripts.Runtime.CardMatch.Misc;
 using Zenject;
 
 namespace Assets.Scripts.Runtime.CardMatch.UI
@@ -18,9 +19,17 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
 
         public void Initialize()
         {
+            _scoreUIModel.SaveGameButton.gameObject.SetActive(false);
             _signalBus.Subscribe<UpdateScoreValueSignal>(UpdateScoreValue);
             _signalBus.Subscribe<ResetComboValueSignal>(ResetComboValue);
             _signalBus.Subscribe<ResetScoreUISignal>(ResetScoreUI);
+            _signalBus.Subscribe<ToggleSaveButtonSignal>(ToggleSaveButton);
+            _signalBus.Subscribe<StartLoadedGameSignal>(StartLoadedGame);
+
+            _scoreUIModel.SaveGameButton.onClick.AddListener(() =>
+            {
+                _signalBus.Fire(new SaveScoreComboSignal() { combo = _scoreUIModel.ComboValue, score = _scoreUIModel.ScoreValue});
+            });
         }
 
         private void ResetScoreUI(ResetScoreUISignal signal)
@@ -45,6 +54,19 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
         {
             _scoreUIModel.ComboTextValue.text = _scoreUIModel.ComboValue.ToString();
             _scoreUIModel.ScoreTextValue.text = _scoreUIModel.ScoreValue.ToString();
+        }
+
+        private void ToggleSaveButton(ToggleSaveButtonSignal signal)
+        {
+            _scoreUIModel.SaveGameButton.gameObject.SetActive(signal.showButton);
+        }
+        
+        private void StartLoadedGame(StartLoadedGameSignal signal)
+        {
+            SaveGameStateHandler.GameInfo gameInfo = SaveGameStateHandler.LoadGameInfo();
+            _scoreUIModel.ScoreValue = gameInfo.score;
+            _scoreUIModel.ComboValue = gameInfo.combo;
+            UpdateScoreComboText();
         }
     }
 }

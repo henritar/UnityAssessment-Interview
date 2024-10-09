@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Runtime.CardMatch.Cards;
+using Assets.Scripts.Runtime.CardMatch.Handler;
 using Assets.Scripts.Runtime.CardMatch.Installers;
 using Assets.Scripts.Runtime.CardMatch.Misc;
 using System.Collections.Generic;
@@ -36,8 +37,10 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
         public void Initialize()
         {
             _signalBus.Subscribe<StartGameSignal>(StartGame);
+            _signalBus.Subscribe<StartLoadedGameSignal>(StartLoadedGame);
             _signalBus.Subscribe<UpdateScoreValueSignal>(ConsumeCard);
             _signalBus.Subscribe<UpdateGridSizeSignal>(UpdateGridSize);
+            _signalBus.Subscribe<SaveScoreComboSignal>(SaveGameInfo);
         }
 
         public CardView SpawnCard()
@@ -81,16 +84,21 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
 
         private void StartGame(StartGameSignal signal)
         {
-            _maxCards = _rowCount * _columnCount;
-            _maxCards = _maxCards % 2 == 0 ? _maxCards : _maxCards - 1;
-            _cardCount = 0;
-            
+            _signalBus.Fire(new ToggleSaveButtonSignal() { showButton = true });
             SetGridCellDimensions();
             CardView spawnedCard;
             do
             {
                 spawnedCard = SpawnCard();
             } while (spawnedCard != null);
+        }
+
+        private void StartLoadedGame(StartLoadedGameSignal signal)
+        {
+            ClearPool();
+            StartGame(new StartGameSignal());
+            SaveGameStateHandler.LoadGridState(_gridLayout.transform.GetComponentsInChildren<CardView>().ToList(), _cardTypes);
+            _cardCount = _cardPool.Where(card => card.SpriteRenderer.enabled).Count();
         }
 
         private void ConsumeCard(UpdateScoreValueSignal signal)
@@ -101,6 +109,12 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
                 ClearPool();
                 _signalBus.Fire(new GameOverSignal());
             }
+        }
+
+        private void SaveGameInfo(SaveScoreComboSignal signal)
+        {
+            SaveGameStateHandler.SaveGameInfo(_rowCount, _columnCount, signal.score, signal.combo);
+            SaveGameStateHandler.SaveGridElements(_gridLayout.transform.GetComponentsInChildren<CardView>().ToList());
         }
 
         private void UpdateGridSize(UpdateGridSizeSignal signal)
@@ -126,6 +140,11 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
 
         private void SetGridCellDimensions()
         {
+            _maxCards = _rowCount * _columnCount;
+            _maxCards = _maxCards % 2 == 0 ? _maxCards : _maxCards - 1;
+            _cardCount = 0;
+
+
             RectTransform gridRectTransform = _gridLayout.GetComponent<RectTransform>();
             float containerWidth = gridRectTransform.rect.width;
             float containerHeight = gridRectTransform.rect.height;

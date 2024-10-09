@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Assets.Scripts.Runtime.CardMatch.UI
 {
-    public class MainUIController : IInitializable, IDisposable
+    public class MainUIController : IInitializable
     {
         readonly MainUIModel _model;
         readonly MainUIView _view;
@@ -75,11 +75,6 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
 #else
         Application.Quit();
 #endif
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Handler
         private void GameOver(GameOverSignal signal)
         {
             Debug.Log("GAME OVER!");
+            _signalBus.Fire(new ToggleSaveButtonSignal() {  showButton = false });
             _signalBus.Fire(new ReturnToMainUISignal());
         }
     }

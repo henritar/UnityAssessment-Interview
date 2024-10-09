@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Runtime.CardMatch.Cards;
 using Assets.Scripts.Runtime.CardMatch.Enum;
+using static Assets.Scripts.Runtime.CardMatch.Handler.SaveGameStateHandler;
 
 namespace Assets.Scripts.Runtime.CardMatch.Misc
 {
@@ -9,8 +10,17 @@ namespace Assets.Scripts.Runtime.CardMatch.Misc
     public struct StartGameSignal
     {
     }
+    public struct StartLoadedGameSignal
+    {
+    }
+    public struct SaveScoreComboSignal
+    {
+        public int score;
+        public int combo;
+    }
     public struct LoadGameSignal
     {
+        public GameInfo gameInfo;
     }
     public struct SettingsSignal
     {
@@ -21,6 +31,11 @@ namespace Assets.Scripts.Runtime.CardMatch.Misc
     public struct ResetScoreUISignal
     {
     }
+    public struct LoadScoreComboSignal
+    {
+        public int score;
+        public int combo;
+    }
     public struct UpdateScoreValueSignal
     {
     }
@@ -29,6 +44,10 @@ namespace Assets.Scripts.Runtime.CardMatch.Misc
     } 
     public struct GameOverSignal
     {
+    }
+    public struct ToggleSaveButtonSignal
+    {
+        public bool showButton;
     }
     public struct FlipCardSignal
     {
