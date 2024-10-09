@@ -44,5 +44,5 @@ MonoBehaviour:
       CardId: 12
     - CardSprite: {fileID: -1949497895, guid: 606bb6f838a2af34ba475b4383b1e8db, type: 3}
       CardId: 13
-    RowCount: 5
-    ColumnCount: 3
+    RowCount: 2
+    ColumnCount: 2

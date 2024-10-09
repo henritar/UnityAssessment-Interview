@@ -1,11 +1,13 @@
 ﻿using Assets.Scripts.Runtime.CardMatch.Misc;
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace Assets.Scripts.Runtime.CardMatch.UI
 {
-    public class MainUIController : IInitializable
+    public class MainUIController : IInitializable, IDisposable
     {
         readonly MainUIModel _model;
         readonly MainUIView _view;
@@ -46,6 +48,20 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
                 QuitGame();
             });
 
+            _model.TwoTwoToggle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 2, 2));
+            _model.ThreeThreeToogle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 3, 3));
+            _model.FourThreeToggle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 4, 3));
+            _model.FiveFourToggle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 5, 4));
+
+        }
+
+        void OnToggleChanged(bool isOn, int rowCount, int columnCount)
+        {
+            if (isOn)
+            {
+                Debug.Log($"Toggle for {rowCount}x{columnCount} grid size selected!");
+                _signalBus.Fire(new UpdateGridSizeSignal() { columnCount = columnCount, rowCount = rowCount, modifier = Enum.GridSizeModifier.substitute });
+            }
         }
 
         private void ResetMainUI(ReturnToMainUISignal signal)
@@ -60,6 +76,11 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
 #else
         Application.Quit();
 #endif
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

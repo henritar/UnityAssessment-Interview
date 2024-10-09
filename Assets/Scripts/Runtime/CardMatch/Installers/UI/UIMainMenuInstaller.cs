@@ -12,6 +12,10 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers.UI
         [SerializeField] public Button LoadGameButton;
         [SerializeField] public Button SettingsButton;
         [SerializeField] public Button QuitButton;
+        [SerializeField] public Toggle TwoTwoToggle;
+        [SerializeField] public Toggle ThreeThreeToogle;
+        [SerializeField] public Toggle FourThreeToggle;
+        [SerializeField] public Toggle FiveFourToggle;
 
         public override void InstallBindings()
         {
@@ -24,6 +28,10 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers.UI
             Container.BindInstance(LoadGameButton).WithId("loadGameButton").WhenInjectedInto<MainUIModel>();
             Container.BindInstance(SettingsButton).WithId("settingsButton").WhenInjectedInto<MainUIModel>();
             Container.BindInstance(QuitButton).WithId("quitButton").WhenInjectedInto<MainUIModel>();
+            Container.BindInstance(TwoTwoToggle).WithId("TwoTwoToggle").WhenInjectedInto<MainUIModel>();
+            Container.BindInstance(ThreeThreeToogle).WithId("ThreeThreeToogle").WhenInjectedInto<MainUIModel>();
+            Container.BindInstance(FourThreeToggle).WithId("FourThreeToggle").WhenInjectedInto<MainUIModel>();
+            Container.BindInstance(FiveFourToggle).WithId("FiveFourToggle").WhenInjectedInto<MainUIModel>();
         }
     }
 }

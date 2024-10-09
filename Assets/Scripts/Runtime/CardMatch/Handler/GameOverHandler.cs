@@ -22,9 +22,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Handler
         private void GameOver(GameOverSignal signal)
         {
             Debug.Log("GAME OVER!");
-            _signalBus.Fire(new UpdateGridSizeSignal() { columnCount = 1, rowCount = 1, modifier = Enum.GridSizeModifier.add });
             _signalBus.Fire(new ReturnToMainUISignal());
         }
-
     }
 }
