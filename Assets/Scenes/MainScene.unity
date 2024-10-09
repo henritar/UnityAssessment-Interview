@@ -855,6 +855,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6781743782233214635, guid: f81e2b0d64e05064c83eac404078d101, type: 3}
+      propertyPath: m_text
+      value: New Game
+      objectReference: {fileID: 0}
     - target: {fileID: 6967553048869023268, guid: f81e2b0d64e05064c83eac404078d101, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
