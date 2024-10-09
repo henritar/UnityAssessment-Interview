@@ -12,9 +12,9 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
     public class CardSpawner : IInitializable
     {
         [Inject(Id = "rowCount")]
-        private readonly int _rowCount;
+        private  int _rowCount;
         [Inject(Id = "columnCount")]
-        private readonly int _columnCount;
+        private  int _columnCount;
         [Inject(Id = "cardTypes")]
         private readonly MainSceneInstaller.CardType[] _cardTypes;
         private readonly IFactory<CardView> _cardFactory;
@@ -37,10 +37,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
         {
             _signalBus.Subscribe<StartGameSignal>(StartGame);
             _signalBus.Subscribe<UpdateScoreValueSignal>(ConsumeCard);
-            
-            _maxCards = _rowCount * _columnCount;
-
-            _maxCards = _maxCards % 2 == 0 ? _maxCards : _maxCards - 1;
+            _signalBus.Subscribe<UpdateGridSizeSignal>(UpdateGridSize);
         }
 
         public CardView SpawnCard()
@@ -61,6 +58,14 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
             var cardRect = newCard.GetComponent<RectTransform>();
             cardRect.sizeDelta = _cellSize;
 
+            Vector2 spriteSize = newCard.SpriteRenderer.sprite.bounds.size;
+
+            float scaleX = _cellSize.x / spriteSize.x;
+            float scaleY = _cellSize.y / spriteSize.y;
+
+            newCard.transform.localScale = new Vector3(scaleX, scaleY, 1f);
+            newCard.SpriteRenderer.enabled = true;
+
             _cardPool.Add(newCard);
             return newCard;
         }
@@ -76,9 +81,12 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
 
         private void StartGame(StartGameSignal signal)
         {
-            CardView spawnedCard;
+            _maxCards = _rowCount * _columnCount;
+            _maxCards = _maxCards % 2 == 0 ? _maxCards : _maxCards - 1;
             _cardCount = 0;
+            
             SetGridCellDimensions();
+            CardView spawnedCard;
             do
             {
                 spawnedCard = SpawnCard();
@@ -92,6 +100,27 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
             {
                 ClearPool();
                 _signalBus.Fire(new GameOverSignal());
+            }
+        }
+
+        private void UpdateGridSize(UpdateGridSizeSignal signal)
+        {
+            switch (signal.modifier)
+            {
+                case Enum.GridSizeModifier.add:
+                    _rowCount += signal.rowCount;
+                    _columnCount += signal.columnCount;
+                    break;
+                case Enum.GridSizeModifier.subtract:
+                    _rowCount -= signal.rowCount;
+                    _columnCount -= signal.columnCount;
+                    break;
+                case Enum.GridSizeModifier.substitute:
+                    _rowCount = signal.rowCount;
+                    _columnCount = signal.columnCount;
+                    break;
+                default:
+                    break;
             }
         }
 

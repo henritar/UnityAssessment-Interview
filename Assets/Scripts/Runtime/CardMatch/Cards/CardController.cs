@@ -31,6 +31,8 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
            .Select(_ => _camera.ScreenToWorldPoint(Input.mousePosition))
            .Subscribe(OnClick)
            .AddTo(_cardView);
+
+            _signalBus.Subscribe<GameOverSignal>(RestartBehaviour);
         }
 
         public void Flip()
@@ -68,6 +70,11 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
                 Flip();
                 _signalBus.Fire(new FlipCardSignal() { cardFlipped = this });
             }
+        }
+
+        private void RestartBehaviour(GameOverSignal signal)
+        {
+            _isFlipped = false;
         }
     }
 }
