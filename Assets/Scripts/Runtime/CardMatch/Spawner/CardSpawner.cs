@@ -44,6 +44,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
             _signalBus.Subscribe<UpdateGridSizeSignal>(UpdateGridSize);
             _signalBus.Subscribe<SaveScoreComboSignal>(SaveGameInfo);
             _signalBus.Subscribe<ReturnToMainUISignal>(ResetGame);
+            Random.InitState(System.DateTime.Now.Millisecond);
         }
 
         public CardView SpawnCard()
@@ -95,6 +96,8 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
             {
                 spawnedCard = SpawnCard();
             } while (spawnedCard != null);
+
+            ShuffleGridChildren();
         }
 
         private void StartLoadedGame(StartLoadedGameSignal signal)
@@ -168,6 +171,28 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
             ClearPool();
 
             _signalBus.Fire(new ToggleSaveButtonSignal { showButton = false });
+        }
+
+        private void ShuffleGridChildren()
+        {
+            List<Transform> children = new List<Transform>();
+            foreach (Transform child in _gridLayout.transform)
+            {
+                children.Add(child);
+            }
+
+            for (int i = 0; i < children.Count; i++)
+            {
+                int randomIndex = Random.Range(i, children.Count);
+                Transform temp = children[i];
+                children[i] = children[randomIndex];
+                children[randomIndex] = temp;
+            }
+
+            for (int i = 0; i < children.Count; i++)
+            {
+                children[i].SetSiblingIndex(i);
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
         readonly MainUIModel _model;
         readonly MainUIView _view;
         readonly SignalBus _signalBus;
-
+        private Toggle _activeToggle;
         public MainUIController(MainUIModel model, MainUIView view, SignalBus signalBus)
         {
             _model = model;
@@ -23,7 +23,7 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
         public void Initialize()
         {
             _signalBus.Subscribe<ReturnToMainUISignal>(ResetMainUI);
-
+            _activeToggle = _model.TwoTwoToggle;
             _model.StartGameButton.onClick.AddListener(() =>
             {
                 _signalBus.Fire(new StartGameSignal());
@@ -47,12 +47,30 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
                 QuitGame();
             });
 
-            _model.TwoTwoToggle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 2, 2));
-            _model.ThreeThreeToogle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 3, 3));
-            _model.FourThreeToggle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 4, 3));
-            _model.FiveFourToggle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 5, 4));
-            _model.FiveFiveToggle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 5, 5));
-            _model.SixSixToggle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 6, 6));
+            _model.TwoTwoToggle.onValueChanged.AddListener(isOn => {
+                _activeToggle = _model.TwoTwoToggle;
+                OnToggleChanged(isOn, 2, 2); 
+            });
+            _model.ThreeThreeToogle.onValueChanged.AddListener(isOn => {
+                _activeToggle = _model.ThreeThreeToogle;
+                OnToggleChanged(isOn, 3, 3);
+            });
+            _model.FourThreeToggle.onValueChanged.AddListener(isOn => {
+                _activeToggle = _model.FourThreeToggle;
+                OnToggleChanged(isOn, 4, 3);
+            });
+            _model.FiveFourToggle.onValueChanged.AddListener(isOn => {
+                _activeToggle = _model.FiveFourToggle;
+                OnToggleChanged(isOn, 5, 4);
+            });
+            _model.FiveFiveToggle.onValueChanged.AddListener(isOn => {
+                _activeToggle = _model.FiveFiveToggle;
+                OnToggleChanged(isOn, 5, 5);
+            });
+            _model.SixSixToggle.onValueChanged.AddListener(isOn => {
+                _activeToggle = _model.SixSixToggle;
+                OnToggleChanged(isOn, 6, 6);
+            });
 
         }
 
@@ -68,6 +86,7 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
         private void ResetMainUI(ReturnToMainUISignal signal)
         {
             _model.MainUICanvas.enabled = true;
+            _activeToggle.onValueChanged.Invoke(_activeToggle.isOn);
         }
 
         private void QuitGame()
