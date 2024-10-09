@@ -128,7 +128,7 @@ TextureImporter:
         serializedVersion: 2
         x: 112
         y: 1038
-        width: 404
+        width: 410
         height: 418
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -374,6 +374,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: fast_food_spritesheet_resized_12
+      rect:
+        serializedVersion: 2
+        x: 1465
+        y: 1513
+        width: 404
+        height: 418
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffc73f32b144d76499e5b32dba688ded
+      internalID: 528667830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -389,6 +410,7 @@ TextureImporter:
       fast_food_spritesheet_resized_1: -1630490602
       fast_food_spritesheet_resized_10: 154276238
       fast_food_spritesheet_resized_11: -973232621
+      fast_food_spritesheet_resized_12: 528667830
       fast_food_spritesheet_resized_2: -1710000121
       fast_food_spritesheet_resized_3: -305404411
       fast_food_spritesheet_resized_4: 374731242

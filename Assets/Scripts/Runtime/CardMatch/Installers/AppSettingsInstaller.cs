@@ -12,6 +12,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
         public override void InstallBindings()
         {
             Container.BindInstance(CardSettings.CardPrefab).WithId("cardPrefab").IfNotBound();
+            Container.BindInstance(CardSettings.CardBack).WithId("cardBack").IfNotBound();
             Container.BindInstance(CardSettings.CardParentName).WithId("cardParentName").IfNotBound();
             Container.BindInstance(CardSettings.CardTypesList).WithId("cardTypes").IfNotBound();
             Container.BindInstance(CardSettings.RowCount).WithId("rowCount").IfNotBound();

@@ -45,6 +45,10 @@ namespace Assets.Scripts.Runtime.CardMatch.Misc
     public struct GameOverSignal
     {
     }
+    public struct SwapSpriteSignal
+    {
+        public CardView cardView;
+    }
     public struct ToggleSaveButtonSignal
     {
         public bool showButton;

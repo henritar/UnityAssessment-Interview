@@ -11,6 +11,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
             Container.BindInterfacesAndSelfTo<CardController>().AsSingle();
             Container.Bind<CardModel>().AsSingle().WhenInjectedInto<CardController>();
             Container.Bind<CardView>().FromComponentOnRoot().AsSingle();
+            Container.Bind<Animator>().FromComponentOnRoot().AsSingle();
         }
     }
 }

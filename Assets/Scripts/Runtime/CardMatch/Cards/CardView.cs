@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Runtime.CardMatch.Misc;
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -8,6 +9,8 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
     public class CardView : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable
     {
         public SpriteRenderer SpriteRenderer;
+        public Sprite CardSprite;
+        public SignalBus SignalBus;
 
         IMemoryPool _pool;
 
@@ -29,6 +32,11 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
         public void OnSpawned(IMemoryPool pool)
         {
             _pool = pool;
+        }
+
+        public void SwapSprite()
+        {
+            SignalBus.Fire(new SwapSpriteSignal() { cardView = this });
         }
 
         public class Factory : PlaceholderFactory<CardView>

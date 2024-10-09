@@ -38,6 +38,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
         public class CardSettings
         {
             public GameObject CardPrefab;
+            public Sprite CardBack;
             public string CardParentName;
             public CardType[] CardTypesList;
             public int RowCount;

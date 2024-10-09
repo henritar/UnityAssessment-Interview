@@ -66,7 +66,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Handler
             return new List<GridElement>();
         }
 
-        public static void LoadGridState(List<CardView> gridGameObjects, MainSceneInstaller.CardType[] sprites)
+        public static void LoadGridState(List<CardView> gridGameObjects, MainSceneInstaller.CardType[] sprites, Sprite cardBack)
         {
             var loadedElements = LoadGridElements();
 
@@ -77,7 +77,8 @@ namespace Assets.Scripts.Runtime.CardMatch.Handler
 
                 SpriteRenderer spriteRenderer = gridObject.GetComponent<SpriteRenderer>();
                 spriteRenderer.enabled = element.isSpriteRendererEnabled;
-                gridObject.SpriteRenderer.sprite = sprites[element.spriteIndex].CardSprite;
+                gridObject.SpriteRenderer.sprite = cardBack;
+                gridObject.CardSprite = sprites[element.spriteIndex].CardSprite;
                 gridObject.gameObject.name = element.elementName;
             }
         }

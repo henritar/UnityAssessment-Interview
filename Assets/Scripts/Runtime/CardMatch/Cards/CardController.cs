@@ -2,6 +2,7 @@
 using Zenject;
 using UniRx;
 using Assets.Scripts.Runtime.CardMatch.Misc;
+using System.Collections;
 
 namespace Assets.Scripts.Runtime.CardMatch.Cards
 {
@@ -14,6 +15,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
         private readonly SignalBus _signalBus;
 
         private bool _isFlipped;
+        private bool _canClick = true;
         public string CardName => _cardView.name;
 
         public CardController(CardModel cardModel, CardView cardView, Camera camera, SignalBus signalBus)
@@ -26,18 +28,47 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
 
         public void Initialize()
         {
+            _cardView.SignalBus = _signalBus;
             Observable.EveryUpdate()
            .Where(_ => Input.GetMouseButtonDown(0))
            .Select(_ => _camera.ScreenToWorldPoint(Input.mousePosition))
            .Subscribe(OnClick)
            .AddTo(_cardView);
 
+            _signalBus.Subscribe<SwapSpriteSignal>(SwapSprite);
             _signalBus.Subscribe<GameOverSignal>(RestartBehaviour);
         }
 
         public void Flip()
         {
-            _isFlipped = !_isFlipped;
+            if (_isFlipped)
+            {
+                _isFlipped = false;
+                _cardView.StartCoroutine(WaitForAnimation("FlipBackAnimation"));
+            }
+            else
+            {
+                _isFlipped = true;
+                _cardView.StartCoroutine(WaitForAnimation("FlipAnimation"));
+            }
+        }
+
+        public void SwapSprite(SwapSpriteSignal signal)
+        {
+            if (!signal.cardView.Equals(_cardView))
+            {
+                return;
+            }
+
+            SwapViewSprite();
+        }
+
+        private void SwapViewSprite()
+        {
+            var sprite = _cardView.SpriteRenderer.sprite;
+            _cardView.SpriteRenderer.sprite = _cardView.CardSprite;
+            _cardView.CardSprite = sprite;
+            
         }
 
         public bool Compare(CardController otherCard)
@@ -64,17 +95,55 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
         {
             RaycastHit2D hit = Physics2D.Raycast(clickPosition, Vector2.zero);
 
-            if (hit.collider != null && hit.collider.gameObject == _cardView.gameObject && !_isFlipped)
+            if (hit.collider != null && hit.collider.gameObject == _cardView.gameObject && _canClick)
             {
                 Debug.Log("Clicked card name: " + _cardView.name);
                 Flip();
-                _signalBus.Fire(new FlipCardSignal() { cardFlipped = this });
             }
         }
 
         private void RestartBehaviour(GameOverSignal signal)
         {
             _isFlipped = false;
+            _canClick = true;
+        }
+
+        private IEnumerator WaitForAnimation(string animationName)
+        {
+            if (_isFlipped)
+            {
+                _cardModel.Animator.SetTrigger("Flip");
+            }
+            else
+            {
+                _cardModel.Animator.SetTrigger("FlipBack");
+            }
+
+            yield return new WaitForEndOfFrame();
+
+            AnimatorStateInfo stateInfo = _cardModel.Animator.GetCurrentAnimatorStateInfo(0);
+
+            while (!stateInfo.IsName(animationName))
+            {
+                yield return null;
+                stateInfo = _cardModel.Animator.GetCurrentAnimatorStateInfo(0);
+            }
+
+            while (stateInfo.normalizedTime < 1.0f)
+            {
+                yield return null;
+                stateInfo = _cardModel.Animator.GetCurrentAnimatorStateInfo(0);
+            }
+
+            if (animationName.Equals("FlipAnimation"))
+            {
+                _canClick = false;
+                _signalBus.Fire(new FlipCardSignal() { cardFlipped = this });
+            }
+            else
+            {
+                _canClick = true;
+            }
         }
     }
 }

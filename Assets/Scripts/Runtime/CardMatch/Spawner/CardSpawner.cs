@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using static UnityEditor.Rendering.FilterWindow;
 
 namespace Assets.Scripts.Runtime.CardMatch.Spawner
 {
@@ -18,6 +19,8 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
         private  int _columnCount;
         [Inject(Id = "cardTypes")]
         private readonly MainSceneInstaller.CardType[] _cardTypes;
+        [Inject(Id = "cardBack")]
+        public Sprite _cardBack;
         private readonly IFactory<CardView> _cardFactory;
         private readonly GridLayoutGroup _gridLayout;
         private readonly SignalBus _signalBus;
@@ -55,7 +58,8 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
 
             MainSceneInstaller.CardType cardType = _cardTypes[_cardCount % (_maxCards / 2)];
             newCard.gameObject.name = $"card{cardType.CardId}";
-            newCard.SpriteRenderer.sprite = cardType.CardSprite;
+            newCard.SpriteRenderer.sprite = _cardBack;
+            newCard.CardSprite = cardType.CardSprite;
             _cardCount++;
 
             var cardRect = newCard.GetComponent<RectTransform>();
@@ -97,7 +101,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
         {
             ClearPool();
             StartGame(new StartGameSignal());
-            SaveGameStateHandler.LoadGridState(_gridLayout.transform.GetComponentsInChildren<CardView>().ToList(), _cardTypes);
+            SaveGameStateHandler.LoadGridState(_gridLayout.transform.GetComponentsInChildren<CardView>().ToList(), _cardTypes, _cardBack);
             _cardCount = _cardPool.Where(card => card.SpriteRenderer.enabled).Count();
         }
 

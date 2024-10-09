@@ -21,6 +21,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
             Container.DeclareSignalWithInterfaces<ResetComboValueSignal>().OptionalSubscriber();
             Container.DeclareSignalWithInterfaces<FlipCardSignal>().OptionalSubscriber();
             Container.DeclareSignalWithInterfaces<ToggleSaveButtonSignal>().OptionalSubscriber();
+            Container.DeclareSignalWithInterfaces<SwapSpriteSignal>().OptionalSubscriber();
             Container.DeclareSignalWithInterfaces<GameOverSignal>().OptionalSubscriber();
         }
     }
