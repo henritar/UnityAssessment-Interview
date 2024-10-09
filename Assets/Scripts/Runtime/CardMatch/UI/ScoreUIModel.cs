@@ -12,6 +12,8 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
         public TextMeshProUGUI ComboTextValue;
         [Inject(Id = "saveGameButton")]
         public Button SaveGameButton;
+        [Inject(Id = "returnButton")]
+        public Button ReturnButton;
         public int ScoreValue;
         public int ComboValue;
     }

@@ -20,6 +20,7 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
         public void Initialize()
         {
             _scoreUIModel.SaveGameButton.gameObject.SetActive(false);
+            _scoreUIModel.ReturnButton.gameObject.SetActive(false);
             _signalBus.Subscribe<UpdateScoreValueSignal>(UpdateScoreValue);
             _signalBus.Subscribe<ResetComboValueSignal>(ResetComboValue);
             _signalBus.Subscribe<ResetScoreUISignal>(ResetScoreUI);
@@ -29,6 +30,10 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
             _scoreUIModel.SaveGameButton.onClick.AddListener(() =>
             {
                 _signalBus.Fire(new SaveScoreComboSignal() { combo = _scoreUIModel.ComboValue, score = _scoreUIModel.ScoreValue});
+            });
+            _scoreUIModel.ReturnButton.onClick.AddListener(() =>
+            {
+                _signalBus.Fire(new ReturnToMainUISignal());
             });
         }
 
@@ -59,6 +64,7 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
         private void ToggleSaveButton(ToggleSaveButtonSignal signal)
         {
             _scoreUIModel.SaveGameButton.gameObject.SetActive(signal.showButton);
+            _scoreUIModel.ReturnButton.gameObject.SetActive(signal.showButton);
         }
         
         private void StartLoadedGame(StartLoadedGameSignal signal)

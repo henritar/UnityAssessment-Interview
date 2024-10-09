@@ -257,7 +257,7 @@ namespace UniRx.Operators
 
                 if (allValueStarted)
                 {
-                    OnNext(new List<T>(values));
+                    OnNext(new System.Collections.Generic.List<T>(values));
                     if (hasOnCompleted)
                     {
                         try { observer.OnCompleted(); }

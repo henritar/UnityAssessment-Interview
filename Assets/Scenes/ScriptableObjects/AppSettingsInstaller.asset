@@ -45,5 +45,26 @@ MonoBehaviour:
       CardId: 12
     - CardSprite: {fileID: -1949497895, guid: 606bb6f838a2af34ba475b4383b1e8db, type: 3}
       CardId: 13
+    - CardSprite: {fileID: 1011801752, guid: 83f0af7d5d108754ea440c862184293d, type: 3}
+      CardId: 14
+    - CardSprite: {fileID: 1929658125, guid: 83f0af7d5d108754ea440c862184293d, type: 3}
+      CardId: 15
+    - CardSprite: {fileID: -882078917, guid: 83f0af7d5d108754ea440c862184293d, type: 3}
+      CardId: 16
+    - CardSprite: {fileID: -2077806104, guid: 83f0af7d5d108754ea440c862184293d, type: 3}
+      CardId: 17
+    - CardSprite: {fileID: -1981595717, guid: 83f0af7d5d108754ea440c862184293d, type: 3}
+      CardId: 18
+    - CardSprite: {fileID: -94322697, guid: 83f0af7d5d108754ea440c862184293d, type: 3}
+      CardId: 19
+    - CardSprite: {fileID: 1223840974, guid: 83f0af7d5d108754ea440c862184293d, type: 3}
+      CardId: 20
+    - CardSprite: {fileID: -1399940307, guid: 83f0af7d5d108754ea440c862184293d, type: 3}
+      CardId: 21
     RowCount: 2
     ColumnCount: 2
+  AudioSettings:
+    GameOverAudio: {fileID: 8300000, guid: a172ebce2c5f10146905ba0dacb78d37, type: 3}
+    MismatchCardAudio: {fileID: 8300000, guid: 947dff82e4519da49b042c766f8bebee, type: 3}
+    MatchedCardAudio: {fileID: 8300000, guid: 3b84e81761830184e83b8da2ee24797e, type: 3}
+    SelectedCardAudio: {fileID: 8300000, guid: 120ade937dc144e419de37638e043505, type: 3}

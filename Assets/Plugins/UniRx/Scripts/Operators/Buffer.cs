@@ -79,7 +79,7 @@ namespace UniRx.Operators
         class Buffer : OperatorObserverBase<T, IList<T>>
         {
             readonly BufferObservable<T> parent;
-            List<T> list;
+            System.Collections.Generic.List<T> list;
 
             public Buffer(BufferObservable<T> parent, IObserver<IList<T>> observer, IDisposable cancel) : base(observer, cancel)
             {
@@ -88,7 +88,7 @@ namespace UniRx.Operators
 
             public IDisposable Run()
             {
-                list = new List<T>(parent.count);
+                list = new System.Collections.Generic.List<T>(parent.count);
                 return parent.source.Subscribe(this);
             }
 
@@ -98,7 +98,7 @@ namespace UniRx.Operators
                 if (list.Count == parent.count)
                 {
                     observer.OnNext(list);
-                    list = new List<T>(parent.count);
+                    list = new System.Collections.Generic.List<T>(parent.count);
                 }
             }
 
@@ -121,7 +121,7 @@ namespace UniRx.Operators
         class Buffer_ : OperatorObserverBase<T, IList<T>>
         {
             readonly BufferObservable<T> parent;
-            Queue<List<T>> q;
+            Queue<System.Collections.Generic.List<T>> q;
             int index;
 
             public Buffer_(BufferObservable<T> parent, IObserver<IList<T>> observer, IDisposable cancel) : base(observer, cancel)
@@ -131,7 +131,7 @@ namespace UniRx.Operators
 
             public IDisposable Run()
             {
-                q = new Queue<List<T>>();
+                q = new Queue<System.Collections.Generic.List<T>>();
                 index = -1;
                 return parent.source.Subscribe(this);
             }
@@ -142,7 +142,7 @@ namespace UniRx.Operators
 
                 if (index % parent.skip == 0)
                 {
-                    q.Enqueue(new List<T>(parent.count));
+                    q.Enqueue(new System.Collections.Generic.List<T>(parent.count));
                 }
 
                 var len = q.Count;
@@ -184,7 +184,7 @@ namespace UniRx.Operators
             readonly BufferObservable<T> parent;
             readonly object gate = new object();
 
-            List<T> list;
+            System.Collections.Generic.List<T> list;
 
             public BufferT(BufferObservable<T> parent, IObserver<IList<T>> observer, IDisposable cancel) : base(observer, cancel)
             {
@@ -193,7 +193,7 @@ namespace UniRx.Operators
 
             public IDisposable Run()
             {
-                list = new List<T>();
+                list = new System.Collections.Generic.List<T>();
 
                 var timerSubscription = Observable.Interval(parent.timeSpan, parent.scheduler)
                     .Subscribe(new Buffer(this));
@@ -218,7 +218,7 @@ namespace UniRx.Operators
 
             public override void OnCompleted()
             {
-                List<T> currentList;
+                System.Collections.Generic.List<T> currentList;
                 lock (gate)
                 {
                     currentList = list;
@@ -239,13 +239,13 @@ namespace UniRx.Operators
                 public void OnNext(long value)
                 {
                     var isZero = false;
-                    List<T> currentList;
+                    System.Collections.Generic.List<T> currentList;
                     lock (parent.gate)
                     {
                         currentList = parent.list;
                         if (currentList.Count != 0)
                         {
-                            parent.list = new List<T>();
+                            parent.list = new System.Collections.Generic.List<T>();
                         }
                         else
                         {
@@ -292,7 +292,7 @@ namespace UniRx.Operators
                 q = new Queue<IList<T>>();
 
                 timerD = new SerialDisposable();
-                q.Enqueue(new List<T>());
+                q.Enqueue(new System.Collections.Generic.List<T>());
                 CreateTimer();
 
                 var subscription = parent.source.Subscribe(this);
@@ -332,7 +332,7 @@ namespace UniRx.Operators
                     {
                         if (isShift)
                         {
-                            var s = new List<T>();
+                            var s = new System.Collections.Generic.List<T>();
                             q.Enqueue(s);
                         }
                         if (isSpan)
@@ -384,7 +384,7 @@ namespace UniRx.Operators
             readonly BufferObservable<T> parent;
             readonly object gate = new object();
 
-            List<T> list;
+            System.Collections.Generic.List<T> list;
             long timerId;
             SerialDisposable timerD;
 
@@ -395,7 +395,7 @@ namespace UniRx.Operators
 
             public IDisposable Run()
             {
-                list = new List<T>();
+                list = new System.Collections.Generic.List<T>();
                 timerId = 0L;
                 timerD = new SerialDisposable();
 
@@ -426,7 +426,7 @@ namespace UniRx.Operators
             void OnNextTick(long currentTimerId)
             {
                 var isZero = false;
-                List<T> currentList;
+                System.Collections.Generic.List<T> currentList;
                 lock (gate)
                 {
                     if (currentTimerId != timerId) return;
@@ -434,7 +434,7 @@ namespace UniRx.Operators
                     currentList = list;
                     if (currentList.Count != 0)
                     {
-                        list = new List<T>();
+                        list = new System.Collections.Generic.List<T>();
                     }
                     else
                     {
@@ -448,7 +448,7 @@ namespace UniRx.Operators
             void OnNextRecursive(long currentTimerId, Action<TimeSpan> self)
             {
                 var isZero = false;
-                List<T> currentList;
+                System.Collections.Generic.List<T> currentList;
                 lock (gate)
                 {
                     if (currentTimerId != timerId) return;
@@ -456,7 +456,7 @@ namespace UniRx.Operators
                     currentList = list;
                     if (currentList.Count != 0)
                     {
-                        list = new List<T>();
+                        list = new System.Collections.Generic.List<T>();
                     }
                     else
                     {
@@ -470,14 +470,14 @@ namespace UniRx.Operators
 
             public override void OnNext(T value)
             {
-                List<T> currentList = null;
+                System.Collections.Generic.List<T> currentList = null;
                 lock (gate)
                 {
                     list.Add(value);
                     if (list.Count == parent.count)
                     {
                         currentList = list;
-                        list = new List<T>();
+                        list = new System.Collections.Generic.List<T>();
                         timerId++;
                         CreateTimer();
                     }
@@ -495,7 +495,7 @@ namespace UniRx.Operators
 
             public override void OnCompleted()
             {
-                List<T> currentList;
+                System.Collections.Generic.List<T> currentList;
                 lock (gate)
                 {
                     timerId++;
@@ -530,7 +530,7 @@ namespace UniRx.Operators
 
             readonly BufferObservable<TSource, TWindowBoundary> parent;
             object gate = new object();
-            List<TSource> list;
+            System.Collections.Generic.List<TSource> list;
 
             public Buffer(BufferObservable<TSource, TWindowBoundary> parent, IObserver<IList<TSource>> observer, IDisposable cancel) : base(observer, cancel)
             {
@@ -539,7 +539,7 @@ namespace UniRx.Operators
 
             public IDisposable Run()
             {
-                list = new List<TSource>();
+                list = new System.Collections.Generic.List<TSource>();
 
                 var sourceSubscription = parent.source.Subscribe(this);
                 var windowSubscription = parent.windowBoundaries.Subscribe(new Buffer_(this));
@@ -568,7 +568,7 @@ namespace UniRx.Operators
                 lock (gate)
                 {
                     var currentList = list;
-                    list = new List<TSource>(); // safe
+                    list = new System.Collections.Generic.List<TSource>(); // safe
                     observer.OnNext(currentList);
                     try { observer.OnCompleted(); } finally { Dispose(); }
                 }
@@ -586,13 +586,13 @@ namespace UniRx.Operators
                 public void OnNext(TWindowBoundary value)
                 {
                     var isZero = false;
-                    List<TSource> currentList;
+                    System.Collections.Generic.List<TSource> currentList;
                     lock (parent.gate)
                     {
                         currentList = parent.list;
                         if (currentList.Count != 0)
                         {
-                            parent.list = new List<TSource>();
+                            parent.list = new System.Collections.Generic.List<TSource>();
                         }
                         else
                         {

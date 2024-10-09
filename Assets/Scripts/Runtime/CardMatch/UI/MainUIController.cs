@@ -51,6 +51,8 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
             _model.ThreeThreeToogle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 3, 3));
             _model.FourThreeToggle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 4, 3));
             _model.FiveFourToggle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 5, 4));
+            _model.FiveFiveToggle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 5, 5));
+            _model.SixSixToggle.onValueChanged.AddListener(isOn => OnToggleChanged(isOn, 6, 6));
 
         }
 

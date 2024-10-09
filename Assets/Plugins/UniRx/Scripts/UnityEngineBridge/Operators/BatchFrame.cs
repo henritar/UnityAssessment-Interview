@@ -30,7 +30,7 @@ namespace UniRx.Operators
             readonly System.Collections.IEnumerator timer;
             bool isRunning;
             bool isCompleted;
-            List<T> list;
+            System.Collections.Generic.List<T> list;
 
             public BatchFrame(BatchFrameObservable<T> parent, IObserver<IList<T>> observer, IDisposable cancel) : base(observer, cancel)
             {
@@ -40,7 +40,7 @@ namespace UniRx.Operators
 
             public IDisposable Run()
             {
-                list = new List<T>();
+                list = new System.Collections.Generic.List<T>();
                 var sourceSubscription = parent.source.Subscribe(this);
                 return StableCompositeDisposable.Create(sourceSubscription, cancellationToken);
             }
@@ -81,7 +81,7 @@ namespace UniRx.Operators
 
             public override void OnCompleted()
             {
-                List<T> currentList;
+                System.Collections.Generic.List<T> currentList;
                 lock (gate)
                 {
                     isCompleted = true;
@@ -114,7 +114,7 @@ namespace UniRx.Operators
                 {
                     if (parent.cancellationToken.IsDisposed) return false;
 
-                    List<T> currentList;
+                    System.Collections.Generic.List<T> currentList;
                     lock (parent.gate)
                     {
                         if (currentFrame++ == parent.parent.frameCount)
@@ -122,7 +122,7 @@ namespace UniRx.Operators
                             if (parent.isCompleted) return false;
 
                             currentList = parent.list;
-                            parent.list = new List<T>();
+                            parent.list = new System.Collections.Generic.List<T>();
                             parent.isRunning = false;
 
                             // exit lock 

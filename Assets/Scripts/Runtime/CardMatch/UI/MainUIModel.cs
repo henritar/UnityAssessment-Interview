@@ -24,6 +24,10 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
         public Toggle FourThreeToggle;
         [Inject(Id = "FiveFourToggle")]
         public Toggle FiveFourToggle;
+        [Inject(Id = "FiveFiveToggle")]
+        public Toggle FiveFiveToggle;
+        [Inject(Id = "SixSixToggle")]
+        public Toggle SixSixToggle;
 
     }
 }

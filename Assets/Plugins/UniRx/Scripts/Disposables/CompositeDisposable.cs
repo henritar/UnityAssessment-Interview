@@ -12,7 +12,7 @@ namespace UniRx
         private readonly object _gate = new object();
 
         private bool _disposed;
-        private List<IDisposable> _disposables;
+        private System.Collections.Generic.List<IDisposable> _disposables;
         private int _count;
         private const int SHRINK_THRESHOLD = 64;
 
@@ -21,7 +21,7 @@ namespace UniRx
         /// </summary>
         public CompositeDisposable()
         {
-            _disposables = new List<IDisposable>();
+            _disposables = new System.Collections.Generic.List<IDisposable>();
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace UniRx
             if (capacity < 0)
                 throw new ArgumentOutOfRangeException("capacity");
 
-            _disposables = new List<IDisposable>(capacity);
+            _disposables = new System.Collections.Generic.List<IDisposable>(capacity);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace UniRx
             if (disposables == null)
                 throw new ArgumentNullException("disposables");
 
-            _disposables = new List<IDisposable>(disposables);
+            _disposables = new System.Collections.Generic.List<IDisposable>(disposables);
             _count = _disposables.Count;
         }
 
@@ -61,7 +61,7 @@ namespace UniRx
             if (disposables == null)
                 throw new ArgumentNullException("disposables");
 
-            _disposables = new List<IDisposable>(disposables);
+            _disposables = new System.Collections.Generic.List<IDisposable>(disposables);
             _count = _disposables.Count;
         }
 
@@ -134,7 +134,7 @@ namespace UniRx
                         if (_disposables.Capacity > SHRINK_THRESHOLD && _count < _disposables.Capacity / 2)
                         {
                             var old = _disposables;
-                            _disposables = new List<IDisposable>(_disposables.Capacity / 2);
+                            _disposables = new System.Collections.Generic.List<IDisposable>(_disposables.Capacity / 2);
 
                             foreach (var d in old)
                                 if (d != null)
@@ -226,7 +226,7 @@ namespace UniRx
 
             lock (_gate)
             {
-                var disArray = new List<IDisposable>();
+                var disArray = new System.Collections.Generic.List<IDisposable>();
                 foreach (var item in _disposables)
                 {
                     if (item != null) disArray.Add(item);
@@ -250,7 +250,7 @@ namespace UniRx
         /// <returns>An enumerator to iterate over the disposables.</returns>
         public IEnumerator<IDisposable> GetEnumerator()
         {
-            var res = new List<IDisposable>();
+            var res = new System.Collections.Generic.List<IDisposable>();
 
             lock (_gate)
             {

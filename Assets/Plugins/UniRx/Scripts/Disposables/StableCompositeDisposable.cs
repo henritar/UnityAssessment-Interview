@@ -206,7 +206,7 @@ namespace UniRx
         class NAry : StableCompositeDisposable
         {
             int disposedCallCount = -1;
-            private volatile List<IDisposable> _disposables;
+            private volatile System.Collections.Generic.List<IDisposable> _disposables;
 
             public NAry(IDisposable[] disposables)
                 : this((IEnumerable<IDisposable>)disposables)
@@ -215,7 +215,7 @@ namespace UniRx
 
             public NAry(IEnumerable<IDisposable> disposables)
             {
-                _disposables = new List<IDisposable>(disposables);
+                _disposables = new System.Collections.Generic.List<IDisposable>(disposables);
 
                 //
                 // Doing this on the list to avoid duplicate enumeration of disposables.

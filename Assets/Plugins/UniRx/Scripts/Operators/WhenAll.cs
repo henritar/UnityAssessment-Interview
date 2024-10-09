@@ -31,7 +31,7 @@ namespace UniRx.Operators
                 var xs = sourcesEnumerable as IList<IObservable<T>>;
                 if (xs == null)
                 {
-                    xs = new List<IObservable<T>>(sourcesEnumerable); // materialize observables
+                    xs = new System.Collections.Generic.List<IObservable<T>>(sourcesEnumerable); // materialize observables
                 }
                 return new WhenAll_(xs, observer, cancel).Run();
             }
@@ -282,7 +282,7 @@ namespace UniRx.Operators
                 var xs = sourcesEnumerable as IList<IObservable<Unit>>;
                 if (xs == null)
                 {
-                    xs = new List<IObservable<Unit>>(sourcesEnumerable); // materialize observables
+                    xs = new System.Collections.Generic.List<IObservable<Unit>>(sourcesEnumerable); // materialize observables
                 }
                 return new WhenAll_(xs, observer, cancel).Run();
             }

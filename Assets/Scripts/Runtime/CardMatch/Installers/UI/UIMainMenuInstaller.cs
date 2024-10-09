@@ -16,6 +16,8 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers.UI
         [SerializeField] public Toggle ThreeThreeToogle;
         [SerializeField] public Toggle FourThreeToggle;
         [SerializeField] public Toggle FiveFourToggle;
+        [SerializeField] public Toggle FiveFiveToggle;
+        [SerializeField] public Toggle SixSixToggle;
 
         public override void InstallBindings()
         {
@@ -32,6 +34,8 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers.UI
             Container.BindInstance(ThreeThreeToogle).WithId("ThreeThreeToogle").WhenInjectedInto<MainUIModel>();
             Container.BindInstance(FourThreeToggle).WithId("FourThreeToggle").WhenInjectedInto<MainUIModel>();
             Container.BindInstance(FiveFourToggle).WithId("FiveFourToggle").WhenInjectedInto<MainUIModel>();
+            Container.BindInstance(FiveFiveToggle).WithId("FiveFiveToggle").WhenInjectedInto<MainUIModel>();
+            Container.BindInstance(SixSixToggle).WithId("SixSixToggle").WhenInjectedInto<MainUIModel>();
         }
     }
 }

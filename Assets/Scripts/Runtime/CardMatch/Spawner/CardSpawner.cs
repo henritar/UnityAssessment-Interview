@@ -7,7 +7,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
-using static UnityEditor.Rendering.FilterWindow;
 
 namespace Assets.Scripts.Runtime.CardMatch.Spawner
 {
@@ -44,6 +43,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
             _signalBus.Subscribe<UpdateScoreValueSignal>(ConsumeCard);
             _signalBus.Subscribe<UpdateGridSizeSignal>(UpdateGridSize);
             _signalBus.Subscribe<SaveScoreComboSignal>(SaveGameInfo);
+            _signalBus.Subscribe<ReturnToMainUISignal>(ResetGame);
         }
 
         public CardView SpawnCard()
@@ -161,6 +161,13 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
 
             _cellSize = new Vector2(cellWidth, cellHeight);
             _gridLayout.cellSize = _cellSize;
+        }
+
+        private void ResetGame(ReturnToMainUISignal signal)
+        {
+            ClearPool();
+
+            _signalBus.Fire(new ToggleSaveButtonSignal { showButton = false });
         }
     }
 }

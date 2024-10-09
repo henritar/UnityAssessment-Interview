@@ -4,6 +4,7 @@ using UniRx;
 using Assets.Scripts.Runtime.CardMatch.Misc;
 using System.Collections;
 using Assets.Scripts.Runtime.CardMatch.Installers;
+using System;
 
 namespace Assets.Scripts.Runtime.CardMatch.Cards
 {
@@ -19,6 +20,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
 
         private bool _isFlipped;
         private bool _canClick = true;
+        private IDisposable animationSubscription;
         public string CardName => _cardView.name;
 
         public CardController(AudioPlayer audioPlayer, CardModel cardModel, CardView cardView, Camera camera, SignalBus signalBus)
@@ -41,6 +43,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
 
             _signalBus.Subscribe<SwapSpriteSignal>(SwapSprite);
             _signalBus.Subscribe<GameOverSignal>(RestartBehaviour);
+            _signalBus.Subscribe<ReturnToMainUISignal>(ReturnBehaviour);
         }
 
         public void Flip()
@@ -48,12 +51,12 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
             if (_isFlipped)
             {
                 _isFlipped = false;
-                _cardView.StartCoroutine(WaitForAnimation("FlipBackAnimation"));
+                StartFlipAnimation("FlipBackAnimation");
             }
             else
             {
                 _isFlipped = true;
-                _cardView.StartCoroutine(WaitForAnimation("FlipAnimation"));
+                StartFlipAnimation("FlipAnimation");
             }
         }
 
@@ -111,9 +114,31 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
         {
             _isFlipped = false;
             _canClick = true;
+            CancelFlipAnimation();
+        }
+        
+        private void ReturnBehaviour(ReturnToMainUISignal signal)
+        {
+            _isFlipped = false;
+            _canClick = true;
+            CancelFlipAnimation();
         }
 
-        private IEnumerator WaitForAnimation(string animationName)
+        private void StartFlipAnimation(string animationName)
+        {
+            animationSubscription = WaitForAnimation(animationName)
+                .Subscribe(_ =>
+                {
+                    Debug.Log("Animação concluída");
+                });
+        }
+
+        public IObservable<Unit> WaitForAnimation(string animationName)
+        {
+            return Observable.FromCoroutine<Unit>(observer => WaitForAnimationCoroutine(animationName, observer));
+        }
+
+        private IEnumerator WaitForAnimationCoroutine(string animationName, IObserver<Unit> observer)
         {
             if (_isFlipped)
             {
@@ -148,6 +173,14 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
             else
             {
                 _canClick = true;
+            }
+        }
+
+        private void CancelFlipAnimation()
+        {
+            if (animationSubscription != null)
+            {
+                animationSubscription.Dispose();
             }
         }
     }

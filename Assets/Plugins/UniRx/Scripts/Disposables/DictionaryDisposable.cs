@@ -161,7 +161,7 @@ namespace UniRx
             {
                 lock (inner)
                 {
-                    return new List<TKey>(inner.Keys);
+                    return new System.Collections.Generic.List<TKey>(inner.Keys);
                 }
             }
         }
@@ -172,7 +172,7 @@ namespace UniRx
             {
                 lock (inner)
                 {
-                    return new List<TValue>(inner.Values);
+                    return new System.Collections.Generic.List<TValue>(inner.Values);
                 }
             }
         }
@@ -223,7 +223,7 @@ namespace UniRx
         {
             lock (inner)
             {
-                return new List<KeyValuePair<TKey, TValue>>((ICollection<KeyValuePair<TKey, TValue>>)inner).GetEnumerator();
+                return new System.Collections.Generic.List<KeyValuePair<TKey, TValue>>((ICollection<KeyValuePair<TKey, TValue>>)inner).GetEnumerator();
             }
         }
 

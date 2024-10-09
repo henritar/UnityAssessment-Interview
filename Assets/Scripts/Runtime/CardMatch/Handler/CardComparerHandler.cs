@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Assets.Scripts.Runtime.CardMatch.Handler
 {
-    public class CardComparerHandler : IInitializable, IDisposable
+    public class CardComparerHandler : IInitializable
     {
         [Inject(Id = "audioSettings")]
         private readonly MainSceneInstaller.AudioClipsSettings _audioSettings;
@@ -25,15 +25,24 @@ namespace Assets.Scripts.Runtime.CardMatch.Handler
 
         public void Initialize()
         {
-            _reactiveList
-             .ObserveAdd()
-             .Buffer(2)
-             .Subscribe(pairOfElements =>
-             {
-                 ComparePairOfCards(pairOfElements[0].Value, pairOfElements[1].Value);
-             });
+            SetReactiveListObserver();
 
             _signalBus.Subscribe<FlipCardSignal>(AddCardToCollection);
+            _signalBus.Subscribe<ReturnToMainUISignal>(ResetBehaviour);
+        }
+
+        private void SetReactiveListObserver()
+        {
+            _reactiveList
+                         .ObserveAdd()
+                         .Buffer(2)
+                         .Subscribe(pairOfElements =>
+                         {
+                             if (pairOfElements.Count > 1)
+                             {
+                                ComparePairOfCards(pairOfElements[0].Value, pairOfElements[1].Value);
+                             }
+                         });
         }
 
         private void AddCardToCollection(FlipCardSignal signal)
@@ -62,14 +71,29 @@ namespace Assets.Scripts.Runtime.CardMatch.Handler
                 card2.Flip();
             }
 
-            _reactiveList.Remove(card1);
-            _reactiveList.Remove(card2);
+            _reactiveList?.Remove(card1);
+            _reactiveList?.Remove(card2);
+        }
+
+        private void ResetBehaviour(ReturnToMainUISignal signal) 
+        {
+            try
+            {
+                Dispose();
+            }
+            catch (Exception e)
+            {
+                Debug.Log("List already disposed");
+            }
+
+            _reactiveList = new();
+            SetReactiveListObserver();
         }
 
         public void Dispose()
         {
-            _reactiveList.Clear();
-            _reactiveList.Dispose();
+            _reactiveList?.Dispose();
+            _reactiveList = null;
         }
     }
 }

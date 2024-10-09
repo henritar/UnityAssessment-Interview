@@ -163,8 +163,8 @@ namespace UniRx
             }
         }
 
-        public ReactiveCollection(List<T> list)
-            : base(list != null ? new List<T>(list) : null)
+        public ReactiveCollection(System.Collections.Generic.List<T> list)
+            : base(list != null ? new System.Collections.Generic.List<T>(list) : null)
         {
         }
 

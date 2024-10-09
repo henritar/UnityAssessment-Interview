@@ -238,7 +238,7 @@ namespace UniRx.Operators
 
                 if (isAllValueStarted)
                 {
-                    OnNext(new List<T>(values));
+                    OnNext(new System.Collections.Generic.List<T>(values));
                     return;
                 }
 
@@ -256,7 +256,7 @@ namespace UniRx.Operators
 
                 if (isAllValueStarted)
                 {
-                    OnNext(new List<T>(values));
+                    OnNext(new System.Collections.Generic.List<T>(values));
                     return;
                 }
                 else
