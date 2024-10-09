@@ -10,7 +10,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers.UI
         [SerializeField] public Canvas MainUICanvas;
         [SerializeField] public Button StartGameButton;
         [SerializeField] public Button LoadGameButton;
-        [SerializeField] public Button SettingsButton;
+        [SerializeField] public Button ResetButton;
         [SerializeField] public Button QuitButton;
         [SerializeField] public Toggle TwoTwoToggle;
         [SerializeField] public Toggle ThreeThreeToogle;
@@ -26,7 +26,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers.UI
             Container.BindInstance(MainUICanvas).WithId("mainUICanvas").WhenInjectedInto<MainUIModel>();
             Container.BindInstance(StartGameButton).WithId("startGameButton").WhenInjectedInto<MainUIModel>();
             Container.BindInstance(LoadGameButton).WithId("loadGameButton").WhenInjectedInto<MainUIModel>();
-            Container.BindInstance(SettingsButton).WithId("settingsButton").WhenInjectedInto<MainUIModel>();
+            Container.BindInstance(ResetButton).WithId("resetButton").WhenInjectedInto<MainUIModel>();
             Container.BindInstance(QuitButton).WithId("quitButton").WhenInjectedInto<MainUIModel>();
             Container.BindInstance(TwoTwoToggle).WithId("TwoTwoToggle").WhenInjectedInto<MainUIModel>();
             Container.BindInstance(ThreeThreeToogle).WithId("ThreeThreeToogle").WhenInjectedInto<MainUIModel>();

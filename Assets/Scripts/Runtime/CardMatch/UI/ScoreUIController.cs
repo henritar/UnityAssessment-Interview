@@ -27,19 +27,24 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
         {
             _scoreUIModel.ScoreValue = 0;
             _scoreUIModel.ComboValue = 0;
+            UpdateScoreComboText();
         }
 
         private void UpdateScoreValue(UpdateScoreValueSignal signal)
         {
             _scoreUIModel.ScoreValue += 5 * ++_scoreUIModel.ComboValue;
-            _scoreUIModel.ComboTextValue.text = _scoreUIModel.ComboValue.ToString();
-            _scoreUIModel.ScoreTextValue.text = _scoreUIModel.ScoreValue.ToString();
+            UpdateScoreComboText();
         }
 
         private void ResetComboValue(ResetComboValueSignal signal)
         {
             _scoreUIModel.ComboValue = 0;
+            UpdateScoreComboText();
+        }
+        private void UpdateScoreComboText()
+        {
             _scoreUIModel.ComboTextValue.text = _scoreUIModel.ComboValue.ToString();
+            _scoreUIModel.ScoreTextValue.text = _scoreUIModel.ScoreValue.ToString();
         }
     }
 }

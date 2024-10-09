@@ -36,10 +36,9 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
                 _model.MainUICanvas.enabled = false;
             });
 
-            _model.SettingsButton.onClick.AddListener(() =>
+            _model.ResetButton.onClick.AddListener(() =>
             {
-                _signalBus.Fire(new SettingsSignal());
-                _model.MainUICanvas.enabled = false;
+                _signalBus.Fire(new ResetScoreUISignal());
             });
 
             _model.QuitButton.onClick.AddListener(() =>
