@@ -25,6 +25,9 @@ namespace Assets.Scripts.Runtime.CardMatch.Misc
     }
     public struct ResetComboValueSignal
     {
+    } 
+    public struct GameOverSignal
+    {
     }
     public struct FlipCardSignal
     {

@@ -16,6 +16,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
             Container.DeclareSignalWithInterfaces<ResetScoreUISignal>().OptionalSubscriber();
             Container.DeclareSignalWithInterfaces<ResetComboValueSignal>().OptionalSubscriber();
             Container.DeclareSignalWithInterfaces<FlipCardSignal>().OptionalSubscriber();
+            Container.DeclareSignalWithInterfaces<GameOverSignal>().OptionalSubscriber();
         }
     }
 }

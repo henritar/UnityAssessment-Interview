@@ -36,6 +36,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
         public void Initialize()
         {
             _signalBus.Subscribe<StartGameSignal>(StartGame);
+            _signalBus.Subscribe<UpdateScoreValueSignal>(ConsumeCard);
             
             _maxCards = _rowCount * _columnCount;
 
@@ -64,13 +65,13 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
             return newCard;
         }
 
-        public void RemoveCard(CardView card)
+        private void ClearPool()
         {
-            while (_cardPool.Contains(card))
+            foreach (var card in _cardPool)
             {
-                _cardPool.Remove(card);
                 card.Dispose();
             }
+            _cardPool.Clear();
         }
 
         private void StartGame(StartGameSignal signal)
@@ -82,6 +83,16 @@ namespace Assets.Scripts.Runtime.CardMatch.Spawner
             {
                 spawnedCard = SpawnCard();
             } while (spawnedCard != null);
+        }
+
+        private void ConsumeCard(UpdateScoreValueSignal signal)
+        {
+            _cardCount -= 2;
+            if (_cardCount <= 0)
+            {
+                ClearPool();
+                _signalBus.Fire(new GameOverSignal());
+            }
         }
 
         private void SetGridCellDimensions()

@@ -23,6 +23,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
 
             Container.BindInterfacesAndSelfTo<CardSpawner>().AsSingle();
             Container.BindInterfacesAndSelfTo<CardComparerHandler>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameOverHandler>().AsSingle();
 
             var cardParent = GameObject.Find(_cardParentName).GetComponent<GridLayoutGroup>();
 
