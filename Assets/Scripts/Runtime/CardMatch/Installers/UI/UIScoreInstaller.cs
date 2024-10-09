@@ -9,11 +9,11 @@ public class UIScoreInstaller : MonoInstaller
     [SerializeField] private TextMeshProUGUI _comboValue;
     public override void InstallBindings()
     {
-        Container.BindInterfacesAndSelfTo<UIScoreInstaller>().AsSingle();
-        Container.Bind<ScoreUIModel>().AsSingle().WhenInjectedInto<UIScoreInstaller>();
-        Container.BindInterfacesAndSelfTo<ScoreUIView>().FromComponentInHierarchy().AsSingle().WhenInjectedInto<UIScoreInstaller>();
+        Container.BindInterfacesAndSelfTo<ScoreUIController>().AsSingle();
+        Container.Bind<ScoreUIModel>().AsSingle().WhenInjectedInto<ScoreUIController>();
+        Container.BindInterfacesAndSelfTo<ScoreUIView>().FromComponentInHierarchy().AsSingle().WhenInjectedInto<ScoreUIController>();
 
-        Container.BindInstance(_scoreValue).WithId("scoreValueText").WhenInjectedInto<MainUIModel>();
-        Container.BindInstance(_comboValue).WithId("comboValueText").WhenInjectedInto<MainUIModel>();
+        Container.BindInstance(_scoreValue).WithId("scoreValueText").WhenInjectedInto<ScoreUIModel>();
+        Container.BindInstance(_comboValue).WithId("comboValueText").WhenInjectedInto<ScoreUIModel>();
     }
 }

@@ -43,12 +43,14 @@ namespace Assets.Scripts.Runtime.CardMatch.Handler
             if (card1.Compare(card2))
             {
                 Debug.Log("Cards Match!");
+                _signalBus.Fire(new UpdateScoreValueSignal());
                 card1.MatchCard();
                 card2.MatchCard();
             }
             else
             {
                 Debug.Log("Wrong cards...");
+                _signalBus.Fire(new ResetComboValueSignal());
                 card1.Flip();
                 card2.Flip();
             }

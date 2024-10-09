@@ -22,11 +22,9 @@ namespace Assets.Scripts.Runtime.CardMatch.Misc
     }
     public struct UpdateScoreValueSignal
     {
-        public int newValue;
     }
-    public struct UpdateComboValueSignal
+    public struct ResetComboValueSignal
     {
-        public int newValue;
     }
     public struct FlipCardSignal
     {

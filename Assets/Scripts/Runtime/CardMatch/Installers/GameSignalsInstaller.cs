@@ -13,7 +13,8 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
             Container.DeclareSignalWithInterfaces<SettingsSignal>().OptionalSubscriber();
             Container.DeclareSignalWithInterfaces<QuitGameSignal>().OptionalSubscriber();
             Container.DeclareSignalWithInterfaces<UpdateScoreValueSignal>().OptionalSubscriber();
-            Container.DeclareSignalWithInterfaces<UpdateComboValueSignal>().OptionalSubscriber();
+            Container.DeclareSignalWithInterfaces<ResetScoreUISignal>().OptionalSubscriber();
+            Container.DeclareSignalWithInterfaces<ResetComboValueSignal>().OptionalSubscriber();
             Container.DeclareSignalWithInterfaces<FlipCardSignal>().OptionalSubscriber();
         }
     }

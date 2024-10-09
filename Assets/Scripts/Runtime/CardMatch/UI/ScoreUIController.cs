@@ -19,7 +19,7 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
         public void Initialize()
         {
             _signalBus.Subscribe<UpdateScoreValueSignal>(UpdateScoreValue);
-            _signalBus.Subscribe<UpdateComboValueSignal>(UpdateComboValue);
+            _signalBus.Subscribe<ResetComboValueSignal>(ResetComboValue);
             _signalBus.Subscribe<ResetScoreUISignal>(ResetScoreUI);
         }
 
@@ -31,13 +31,14 @@ namespace Assets.Scripts.Runtime.CardMatch.UI
 
         private void UpdateScoreValue(UpdateScoreValueSignal signal)
         {
-            _scoreUIModel.ScoreValue += signal.newValue;
+            _scoreUIModel.ScoreValue += 5 * ++_scoreUIModel.ComboValue;
+            _scoreUIModel.ComboTextValue.text = _scoreUIModel.ComboValue.ToString();
             _scoreUIModel.ScoreTextValue.text = _scoreUIModel.ScoreValue.ToString();
         }
 
-        private void UpdateComboValue(UpdateComboValueSignal signal)
+        private void ResetComboValue(ResetComboValueSignal signal)
         {
-            _scoreUIModel.ComboValue += signal.newValue;
+            _scoreUIModel.ComboValue = 0;
             _scoreUIModel.ComboTextValue.text = _scoreUIModel.ComboValue.ToString();
         }
     }
