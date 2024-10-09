@@ -7,6 +7,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
     public class AppSettingsInstaller : ScriptableObjectInstaller<AppSettingsInstaller>
     {
         [SerializeField] private MainSceneInstaller.CardSettings CardSettings;
+        [SerializeField] private MainSceneInstaller.AudioClipsSettings AudioSettings;
        
 
         public override void InstallBindings()
@@ -17,6 +18,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
             Container.BindInstance(CardSettings.CardTypesList).WithId("cardTypes").IfNotBound();
             Container.BindInstance(CardSettings.RowCount).WithId("rowCount").IfNotBound();
             Container.BindInstance(CardSettings.ColumnCount).WithId("columnCount").IfNotBound();
+            Container.BindInstance(AudioSettings).WithId("audioSettings").IfNotBound();
         }
     }
 }

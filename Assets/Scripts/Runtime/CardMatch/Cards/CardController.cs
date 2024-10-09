@@ -3,12 +3,15 @@ using Zenject;
 using UniRx;
 using Assets.Scripts.Runtime.CardMatch.Misc;
 using System.Collections;
+using Assets.Scripts.Runtime.CardMatch.Installers;
 
 namespace Assets.Scripts.Runtime.CardMatch.Cards
 {
     public class CardController : IInitializable
     {
-
+        [Inject(Id = "audioSettings")]
+        private readonly MainSceneInstaller.AudioClipsSettings _audioSettings;
+        private readonly AudioPlayer _audioPlayer;
         private readonly CardModel _cardModel;
         private readonly CardView _cardView;
         private readonly Camera _camera;
@@ -18,8 +21,9 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
         private bool _canClick = true;
         public string CardName => _cardView.name;
 
-        public CardController(CardModel cardModel, CardView cardView, Camera camera, SignalBus signalBus)
+        public CardController(AudioPlayer audioPlayer, CardModel cardModel, CardView cardView, Camera camera, SignalBus signalBus)
         {
+            _audioPlayer = audioPlayer;
             _cardModel = cardModel;
             _cardView = cardView;
             _camera = camera;
@@ -98,6 +102,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Cards
             if (hit.collider != null && hit.collider.gameObject == _cardView.gameObject && _canClick)
             {
                 Debug.Log("Clicked card name: " + _cardView.name);
+                _audioPlayer.Play(_audioSettings.SelectedCardAudio);
                 Flip();
             }
         }

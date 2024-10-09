@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Runtime.CardMatch.Cards;
+using Assets.Scripts.Runtime.CardMatch.Installers;
 using Assets.Scripts.Runtime.CardMatch.Misc;
 using System;
 using UniRx;
@@ -9,12 +10,16 @@ namespace Assets.Scripts.Runtime.CardMatch.Handler
 {
     public class CardComparerHandler : IInitializable, IDisposable
     {
+        [Inject(Id = "audioSettings")]
+        private readonly MainSceneInstaller.AudioClipsSettings _audioSettings;
+        private readonly AudioPlayer _audioPlayer;
         private readonly SignalBus _signalBus;
 
         private ReactiveCollection<CardController> _reactiveList = new();
 
-        public CardComparerHandler(SignalBus signalBus)
+        public CardComparerHandler(AudioPlayer audioPlayer, SignalBus signalBus)
         {
+            _audioPlayer = audioPlayer;
             _signalBus = signalBus;
         }
 
@@ -44,6 +49,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Handler
             {
                 Debug.Log("Cards Match!");
                 _signalBus.Fire(new UpdateScoreValueSignal());
+                _audioPlayer.Play(_audioSettings.MatchedCardAudio);
                 card1.MatchCard();
                 card2.MatchCard();
             }
@@ -51,6 +57,7 @@ namespace Assets.Scripts.Runtime.CardMatch.Handler
             {
                 Debug.Log("Wrong cards...");
                 _signalBus.Fire(new ResetComboValueSignal());
+                _audioPlayer.Play(_audioSettings.MismatchCardAudio);
                 card1.Flip();
                 card2.Flip();
             }

@@ -51,6 +51,15 @@ namespace Assets.Scripts.Runtime.CardMatch.Installers
             public Sprite CardSprite;
             public int CardId;
         }
+
+        [Serializable]
+        public class AudioClipsSettings
+        {
+            public AudioClip GameOverAudio;
+            public AudioClip MismatchCardAudio;
+            public AudioClip MatchedCardAudio;
+            public AudioClip SelectedCardAudio;
+        }
     }
 }
 
